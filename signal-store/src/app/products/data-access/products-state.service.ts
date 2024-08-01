@@ -1,6 +1,6 @@
 import { Injectable, inject } from "@angular/core";
 import { signalSlice } from "ngxtension/signal-slice";
-import { map, startWith, Subject, switchMap } from "rxjs";
+import { catchError, map,of, startWith, Subject, switchMap } from "rxjs";
 import { ProductsService } from "./products.service";
 import { Product } from "../../shared/interfaces/product.interface";
 
@@ -25,7 +25,13 @@ export class ProductsStateService {
     loadProducts$ = this.changePage$.pipe(
         startWith(1),
         switchMap((page) => this.productsService.getProducts(page)),
-        map((products) => ({products, status: 'success' as const}))
+        map((products) => ({products, status: 'success' as const})),
+        catchError(() => { 
+            return of({
+          product:[],
+            status: 'error' as const  
+        })
+    })
 );
     state = signalSlice({
         initialState: this.initialState,

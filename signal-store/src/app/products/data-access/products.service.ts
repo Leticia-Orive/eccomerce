@@ -22,4 +22,7 @@ export class ProductsService extends BaseHttpService {
       map((products: Product[]) => products)
     );	
   }
+  getProduct(id: number):Observable<Product> {
+    return this.http.get<Product>(`${this.apiUrl}/products/${id}`);
+  }
 }

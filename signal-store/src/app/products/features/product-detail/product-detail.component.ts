@@ -1,4 +1,5 @@
-import { Component,  } from '@angular/core';
+import { Component, inject,  } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-product-detail',
@@ -8,6 +9,11 @@ import { Component,  } from '@angular/core';
   styles: ``
 })
 export default class ProductDetailComponent {
-  
+  private activatedRoute= inject(ActivatedRoute);
+  constructor() {
+    this.activatedRoute.params.subscribe(params => {
+      console.log(params);
+    });
+  }
 
 }

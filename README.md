@@ -60,3 +60,6 @@ Instalamos eslint + prettier
         ng add @angular-eslint/schematics
     Prettier
         npm install prettier prettier-eslint eslint-config-prettier eslint-plugin-prettier --save-dev 
+
+Instalamos el product-card
+    ng g c  products/ui/product-card -s

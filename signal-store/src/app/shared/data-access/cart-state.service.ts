@@ -53,4 +53,39 @@ export class CartStateService {
       },
     }),
   });
+
+  private add(state: Signal<State>, product: ProductItemCart) {
+    const isInCart = state().products.find(
+      (productInCart) => productInCart.product.id === product.product.id,
+    );
+
+    if (!isInCart) {
+      return {
+        products: [...state().products, { ...product, quantity: 1 }],
+      };
+    }
+
+    isInCart.quantity += 1;
+    return {
+      products: [...state().products],
+    };
+  }
+
+  private remove(state: Signal<State>, id: number) {
+    return {
+      products: state().products.filter((product) => product.product.id !== id),
+    };
+  }
+
+  private update(state: Signal<State>, product: ProductItemCart) {
+    const products = state().products.map((productInCart) => {
+      if (productInCart.product.id === product.product.id) {
+        return { ...productInCart, quantity: product.quantity };
+      }
+
+      return productInCart;
+    });
+
+    return { products };
+  }
 }
